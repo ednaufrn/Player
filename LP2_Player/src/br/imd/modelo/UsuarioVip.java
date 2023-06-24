@@ -1,7 +1,7 @@
 package br.imd.modelo;
 
-class UsuarioVip extends Usuario {
-    public UsuarioVip(String login, String senha, int id) {
+public class UsuarioVip extends Usuario {
+    public UsuarioVip(String login, String senha, String id) {
         super(login, senha, id);
     }
 

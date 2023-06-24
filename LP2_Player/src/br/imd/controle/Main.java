@@ -1,5 +1,6 @@
 package br.imd.controle;
 
+import br.imd.modelo.RetornoLogin;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -30,8 +31,9 @@ public class Main extends Application {
         loginButton.setOnAction(e -> {
             String usuario = usuarioTextField.getText();
             String senha = senhaPasswordField.getText();
-
-            if (LoginService.verificarCredenciais(usuario, senha)) {
+            RetornoLogin retorno = LoginService.verificarCredenciais(usuario, senha);
+            
+            if (retorno.getCodigo() != "0") {
                 System.out.println("Login bem-sucedido");
             } else {
                 System.out.println("Login inválido");

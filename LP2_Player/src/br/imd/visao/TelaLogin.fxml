@@ -13,7 +13,7 @@
          <children>
             <TextField fx:id="usuario" layoutX="73.0" layoutY="161.0" promptText="Usuario" />
             <PasswordField fx:id="senha" layoutX="73.0" layoutY="214.0" promptText="Senha" />
-            <Button fx:id="botaoLogin" alignment="CENTER" layoutX="71.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="30.0" prefWidth="153.0" style="-fx-background-color: #1DB954;" text="Entrar" wrapText="true">
+            <Button fx:id="botaoLogin" alignment="CENTER" layoutX="71.0" layoutY="257.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="153.0" style="-fx-background-color: #1DB954;" text="Entrar" wrapText="true">
                <font>
                   <Font size="13.0" />
                </font>

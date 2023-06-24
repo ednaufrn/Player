@@ -1,6 +1,6 @@
 package br.imd.modelo;
 
-class Musica {
+public class Musica {
     private String titulo;
     private int duracao;
     private int id;

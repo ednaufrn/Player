@@ -3,14 +3,14 @@ package br.imd.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-class Playlist {
+public class Playlist {
     private int id;
     private String nome;
+	private List<Musica> musicas;
+    
     public int getId() {
 		return id;
-	}
-
-    // getters & setters
+    }
 
 	public void setId(int id) {
 		this.id = id;
@@ -28,7 +28,9 @@ class Playlist {
 		this.nome = nome;
 	}
 
-	private List<Musica> musicas;
+    public String getNome() {
+        return nome;
+    }
 
     public Playlist(int id, String nome) {
         this.id = id;
@@ -38,9 +40,5 @@ class Playlist {
 
     public void adicionarMusica(Musica musica) {
         musicas.add(musica);
-    }
-
-    public String getNome() {
-        return nome;
     }
 }

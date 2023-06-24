@@ -1,6 +1,6 @@
 package br.imd.modelo;
 
-class Diretorio {
+public class Diretorio {
     private int id;
     private String caminho;
 
