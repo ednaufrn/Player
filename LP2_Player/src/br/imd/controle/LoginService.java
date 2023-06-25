@@ -7,7 +7,7 @@ import java.io.IOException;
 import br.imd.modelo.*;
 
 public class LoginService {
-    private static final String ARQUIVO_BANCO_DADOS = "C:\\data\\logins.txt";
+    private static final String ARQUIVO_BANCO_DADOS = "src/data/logins.txt";
 
     public static RetornoLogin verificarCredenciais(String usuario, String senha) {
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_BANCO_DADOS))) {
