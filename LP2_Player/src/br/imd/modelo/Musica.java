@@ -1,17 +1,17 @@
 package br.imd.modelo;
 
 public class Musica {
+	private int id;
+	private int duracao;
     private String titulo;
-    private int duracao;
-    private int id;
     private String album;
     private String artista;
     private String caminho;
 
-    public Musica(String titulo, int duracao, int id, String album, String artista, String caminho) {
+    public Musica(int id, int duracao, String titulo, String album, String artista, String caminho) {
+    	this.id = id; 
+    	this.duracao = duracao;
         this.titulo = titulo;
-        this.duracao = duracao;
-        this.id = id;
         this.album = album;
         this.artista = artista;
         this.caminho = caminho;

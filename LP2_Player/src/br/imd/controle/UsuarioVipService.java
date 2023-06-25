@@ -2,13 +2,13 @@ package br.imd.controle;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
-import br.imd.modelo.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -16,8 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 
 public class UsuarioVipService {
 	
@@ -35,6 +39,45 @@ public class UsuarioVipService {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	@FXML
+	public void AdicionarMusica(ActionEvent event){
+    	
+		FileChooser fileChooser = new FileChooser();
+        
+        fileChooser.setTitle("Selecione uma Musica");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Áudios", "*.mp3", "*.wav"));
+        
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        File arquivoSelecionado = fileChooser.showOpenDialog(stage);
+        
+        if (arquivoSelecionado != null) {
+        	System.out.println(arquivoSelecionado.getAbsolutePath());
+        	
+        	Media media = new Media(arquivoSelecionado.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            
+            mediaPlayer.setOnReady(() -> {
+                double duracaoSegundos = media.getDuration().toSeconds();
+                System.out.println("Duração (segundos): " + duracaoSegundos);
+
+                // Converter para minutos e segundos
+                int minutos = (int) duracaoSegundos / 60;
+                int segundos = (int) duracaoSegundos % 60;
+                System.out.println("Duração (mm:ss): " + minutos + ":" + segundos);
+            });
+
+            mediaPlayer.setOnError(() -> {
+                System.out.println("Erro ao carregar a música.");
+            });
+
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.stop();
+            });
+
+            mediaPlayer.play();
+        }
 	}
 	
 	public void Cadastrar(ActionEvent event) throws IOException {
@@ -56,14 +99,14 @@ public class UsuarioVipService {
         	tipoUsuario = "1";
         }
         
-        EscreverNovoUsuarioArquivo(usuario, senha, tipoUsuario);
+        escreverNovoUsuarioArquivo(usuario, senha, tipoUsuario);
         
         stage.close();
 	}
 	
-	private void EscreverNovoUsuarioArquivo(String login, String senha, String idTipo) {
+	private void escreverNovoUsuarioArquivo(String login, String senha, String idTipo) {
 		
-		String arquivo = "src/data/logins.txt";
+		String arquivo = "src/data/logins.csv";
 		
 		try {
             BufferedReader reader = new BufferedReader(new FileReader(arquivo));
