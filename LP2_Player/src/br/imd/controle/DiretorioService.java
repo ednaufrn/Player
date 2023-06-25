@@ -22,12 +22,27 @@ public class DiretorioService {
     	Usuario user = LoginService.getInstance();
     	diretorios = new ArrayList<Diretorio>();
 		carregarDiretorios();
-    	
     }
     
     
     public static ArrayList<Diretorio> getDiretorios() {
         return diretorios;
+    }
+    
+    
+    public void setDiretorioAtual (String titulo) {
+    	int index = -1;
+
+    	for (int i = 0; i < diretorios.size(); i++) {
+    	    Diretorio diretorio = diretorios.get(i);
+    	    if (diretorio.getTitulo().equals(titulo)) {
+    	        index = i;
+    	        break;
+    	    }
+    	}
+    	
+    	diretorioAtual = index;
+
     }
     
     
@@ -44,11 +59,12 @@ public class DiretorioService {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] partes = linha.split(",");
-                if (partes.length == 3 && Integer.parseInt(partes[1]) == user.getId()) {
+                if (partes.length == 4 && Integer.parseInt(partes[1]) == user.getId()) {
             		dir = new Diretorio();
             		dir.setId(Integer.parseInt(partes[0]));
             		dir.setUsuarioId(Integer.parseInt(partes[1]));
-            		dir.setCaminho(partes[2]);
+            		dir.setTitulo(partes[2]);
+            		dir.setCaminho(partes[3]);
             		diretorios.add(dir);
             		
             		if (diretorioAtual < 0) {
@@ -62,9 +78,31 @@ public class DiretorioService {
     }
     
     
-    public static void escreverNovoDiretorioArquivo(String caminho) {
+    private static Boolean directoryAlreadyExists(String titulo) {
+    	Usuario user = LoginService.getInstance();
+    	
+    	int index = -1;
+
+    	for (int i = 0; i < diretorios.size(); i++) {
+    	    Diretorio diretorio = diretorios.get(i);
+    	    if (diretorio.getTitulo().equals(titulo) && diretorio.getUsuarioId() == user.getId()) {
+    	        index = i;
+    	        break;
+    	    }
+    	}
+    	
+    	return index >= 0;
+    }
+    
+    
+    public static Boolean escreverNovoDiretorioArquivo(String titulo, String caminho) {
 		
 		Usuario user = LoginService.getInstance();
+		
+		if (directoryAlreadyExists(titulo)) {
+			System.out.println("Diretorio já cadastrado");
+			return false;
+		}
 		
 		try {
             BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO));
@@ -85,21 +123,24 @@ public class DiretorioService {
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(ARQUIVO, true));          
 
-            writer.write(novoId + "," + user.getId() + "," + caminho);
+            writer.write(novoId + "," + user.getId() + "," + titulo + "," + caminho);
             writer.newLine();
             
             Diretorio dir = new Diretorio();
     		dir.setId(novoId);
     		dir.setUsuarioId(user.getId());
+    		dir.setTitulo(titulo);
     		dir.setCaminho(caminho);
     		diretorios.add(dir);
 
             writer.close();
 
             System.out.println("A nova linha foi adicionada ao arquivo com sucesso.");
+            return true;
 
         } catch (IOException e) {
             System.out.println("Ocorreu um erro ao adicionar a nova linha ao arquivo: " + e.getMessage());
+            return false;
         }
 	}
 }

@@ -44,8 +44,8 @@
       <Label fx:id="labelPlaylist" alignment="CENTER" layoutX="594.0" layoutY="102.0" prefHeight="14.0" prefWidth="85.0" text="Playlists" />
       <ListView fx:id="listaPlaylist" layoutX="570.0" layoutY="119.0" prefHeight="148.0" prefWidth="134.0" />
       <Label fx:id="labelMusicas" alignment="CENTER" layoutX="174.0" layoutY="32.0" prefHeight="18.0" prefWidth="85.0" text="Diretorios" />
-      <ListView fx:id="listaMusicas" layoutX="349.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
-      <ListView fx:id="listaDiretorios" layoutX="122.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
+      <ListView fx:id="listaMusicas" layoutX="349.0" layoutY="55.0" onMouseClicked="#onMusicaClick" prefHeight="222.0" prefWidth="205.0" />
+      <ListView fx:id="listaDiretorios" layoutX="122.0" layoutY="55.0" onMouseClicked="#onDiretorioClick" prefHeight="222.0" prefWidth="205.0" />
       <Label fx:id="labelNomePlaylist" alignment="CENTER" layoutX="409.0" layoutY="33.0" prefHeight="17.0" prefWidth="85.0" text="Musicas" />
       <Button fx:id="botaoPlay" layoutX="89.0" layoutY="352.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="PLAY" />
       <Button fx:id="botaoPause" layoutX="165.0" layoutY="352.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="PAUSA" />
@@ -55,7 +55,7 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <ProgressBar fx:id="somBar" layoutY="327.0" prefHeight="18.0" prefWidth="722.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutY="327.0" prefHeight="18.0" prefWidth="722.0" progress="0.0" />
       <Slider fx:id="volume" layoutX="571.0" layoutY="363.0" prefHeight="14.0" prefWidth="142.0" />
       <Button fx:id="addDiretorio" layoutX="84.0" layoutY="61.0" mnemonicParsing="false" onAction="#AdicionarDiretorio" text="add">
          <font>
@@ -77,7 +77,7 @@
          <font>
             <Font size="9.0" />
          </font></Button>
-      <Label fx:id="labelAddArquivo" alignment="CENTER" layoutY="110.0" prefHeight="18.0" prefWidth="85.0" text="Add Arquivo">
+      <Label fx:id="labelAddArquivo" alignment="CENTER" layoutY="110.0" prefHeight="18.0" prefWidth="85.0" text="Add Musica">
          <font>
             <Font size="9.0" />
          </font>

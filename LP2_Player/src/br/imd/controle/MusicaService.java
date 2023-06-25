@@ -35,7 +35,7 @@ public class MusicaService {
             		musica.setId(Integer.parseInt(partes[0]));
             		musica.setDiretorioId(Integer.parseInt(partes[1]));
             		musica.setTitulo(partes[2]);
-            		musica.setCaminho(partes[2]);
+            		musica.setCaminho(partes[3]);
             		musicas.add(musica);
             		
             		if (musicaAtual < 0) {
@@ -49,7 +49,7 @@ public class MusicaService {
 		return musicas;
     }
 
-	private void escreverNovaMusicaArquivo(String musica, Diretorio dir) {
+	public void escreverNovaMusicaArquivo(String titulo, String caminho, Diretorio dir) {
 		
 		String arquivo = "src/data/musicas.txt";
 		
@@ -65,14 +65,14 @@ public class MusicaService {
             int ultimoId = 0;
             if (ultimaLinha != null) {
             	String[] campos = ultimaLinha.split(",");
-            	ultimoId = Integer.parseInt(campos[2]);
+            	ultimoId = Integer.parseInt(campos[0]);
             }
 
             int novoId = ultimoId + 1;
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(arquivo, true));
 
-            // writer.write(login + "," + senha + "," + novoId + "," + idTipo);
+            writer.write(novoId + "," + dir.getId() + "," + titulo + "," + caminho);
             writer.newLine();
 
             writer.close();
@@ -82,6 +82,16 @@ public class MusicaService {
         } catch (IOException e) {
             System.out.println("Ocorreu um erro ao adicionar a nova linha ao arquivo: " + e.getMessage());
         }
+	}
+
+	public Musica getMusica(String selectedItem) {
+		for (Musica musica : musicas) {
+			if (musica.getTitulo().equals(selectedItem)) {
+				return musica;
+			}
+		}
+
+		return null;
 	}
 }
 
