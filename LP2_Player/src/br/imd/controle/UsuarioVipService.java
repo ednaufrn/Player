@@ -63,7 +63,7 @@ public class UsuarioVipService {
 	
 	private void EscreverNovoUsuarioArquivo(String login, String senha, String idTipo) {
 		
-		String arquivo = "C:\\data\\logins.txt";
+		String arquivo = "src/data/logins.txt";
 		
 		try {
             BufferedReader reader = new BufferedReader(new FileReader(arquivo));
