@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,12 +22,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.FileChooser;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import br.imd.modelo.Diretorio;
 import br.imd.modelo.Musica;
@@ -35,12 +40,15 @@ public class UsuarioVipService {
     private ListView<String> listaDiretorios;
 	@FXML
     private ListView<String> listaMusicas;
+	@FXML
+    private ProgressBar progressBar;
 
     private ObservableList<String> itensDiretorios;
     private ObservableList<String> itensMusicas;
     private MusicaService musicaService;
     private DiretorioService diretorioService;
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
+    private Timeline progressTimeline;
 
     public UsuarioVipService() {
     	musicaService = new MusicaService();
@@ -52,6 +60,10 @@ public class UsuarioVipService {
     @FXML
     public void initialize() {
         listarDiretorios();
+    }
+    
+    public void atualizarProgressBar(double valor) {
+        progressBar.setProgress(valor);
     }
     
     @FXML
@@ -96,8 +108,17 @@ public class UsuarioVipService {
             mediaPlayer.setOnEndOfMedia(() -> {
                 mediaPlayer.stop();
             });
+            
+            progressBar.setProgress(0.0);
+            progressTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                double progress = mediaPlayer.getCurrentTime().toSeconds() / mediaPlayer.getTotalDuration().toSeconds();
+                progressBar.setProgress(progress);
+            }));
+            progressTimeline.setCycleCount(Timeline.INDEFINITE);
 
+            // Inicie o MediaPlayer e o Timeline
             mediaPlayer.play();
+            progressTimeline.play();
         }
     }
 
