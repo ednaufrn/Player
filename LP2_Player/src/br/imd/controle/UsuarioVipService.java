@@ -38,8 +38,13 @@ public class UsuarioVipService {
 
     private ObservableList<String> itensDiretorios;
     private ObservableList<String> itensMusicas;
+    private MusicaService musicaService;
+    private DiretorioService diretorioService;
+    MediaPlayer mediaPlayer;
 
     public UsuarioVipService() {
+    	musicaService = new MusicaService();
+    	diretorioService = new DiretorioService();
     	itensDiretorios = FXCollections.observableArrayList();
     	itensMusicas = FXCollections.observableArrayList();
     }
@@ -48,16 +53,61 @@ public class UsuarioVipService {
     public void initialize() {
         listarDiretorios();
     }
+    
+    @FXML
+    public void onDiretorioClick() {
+        String selectedItem = listaDiretorios.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+        	System.out.println(selectedItem);
+        	diretorioService.setDiretorioAtual(selectedItem);
+        	listarMusicas();
+        }
+    }
+    
+    @FXML
+    public void onMusicaClick() {
+    	if (mediaPlayer != null) {    		
+    		mediaPlayer.stop();
+    	}
+    	
+        String selectedItem = listaMusicas.getSelectionModel().getSelectedItem();
+        Musica musica = musicaService.getMusica(selectedItem);
+        
+        if (musica != null) {
+        	System.out.println("file:" + musica.getCaminho());
+        	Media media = new Media("file:" + musica.getCaminho());
+            mediaPlayer = new MediaPlayer(media);
+            
+            mediaPlayer.setOnReady(() -> {
+                double duracaoSegundos = media.getDuration().toSeconds();
+                System.out.println("Duração (segundos): " + duracaoSegundos);
+
+                // Converter para minutos e segundos
+                int minutos = (int) duracaoSegundos / 60;
+                int segundos = (int) duracaoSegundos % 60;
+                System.out.println("Duração (mm:ss): " + minutos + ":" + segundos);
+            });
+
+            mediaPlayer.setOnError(() -> {
+                System.out.println("Erro ao carregar a música.");
+            });
+
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.stop();
+            });
+
+            mediaPlayer.play();
+        }
+    }
 
     public void listarDiretorios() {
     	if (listaDiretorios == null) {
             System.out.println("Erro: listaDiretorios está nulo.");
             return;
         }
-        DiretorioService diretorios = new DiretorioService();
-        for (Diretorio dir : diretorios.getDiretorios()) {
-            System.out.println(dir.getCaminho());
-            itensDiretorios.add(dir.getCaminho());
+        for (Diretorio dir : diretorioService.getDiretorios()) {
+            itensDiretorios.add(dir.getTitulo());
         }
 
         listaDiretorios.setItems(itensDiretorios);
@@ -68,18 +118,17 @@ public class UsuarioVipService {
     }
 
     public void listarMusicas() {
+    	listaMusicas.getItems().clear();
+    	
     	if (itensMusicas == null) {
             System.out.println("Erro: itensMusicas está nulo.");
             return;
         }
-  
-        DiretorioService diretorios = new DiretorioService();
-        Diretorio dir = diretorios.getDiretorioAtual();
+        Diretorio dir = diretorioService.getDiretorioAtual();
         
         MusicaService musicas = new MusicaService();
         for (Musica musica : musicas.getMusicas(dir)) {
-            System.out.println(musica.getCaminho());
-            itensMusicas.add(musica.getCaminho());
+            itensMusicas.add(musica.getTitulo());
         }
 
         listaMusicas.setItems(itensMusicas);
@@ -111,10 +160,16 @@ public class UsuarioVipService {
 
         if (diretorioSelecionado != null) {
             System.out.println("Diretório selecionado: " + diretorioSelecionado.getAbsolutePath());
-            DiretorioService diretorios = new DiretorioService();
-            diretorios.escreverNovoDiretorioArquivo(diretorioSelecionado.getAbsolutePath());
-            itensDiretorios.add(diretorioSelecionado.getAbsolutePath());
-            listaDiretorios.setItems(itensDiretorios);
+            Boolean sucesso = diretorioService.escreverNovoDiretorioArquivo(
+            		diretorioSelecionado.getName(),
+            		diretorioSelecionado.getAbsolutePath()
+            );
+            	
+            if (sucesso) {
+                itensDiretorios.add(diretorioSelecionado.getName());
+                listaDiretorios.setItems(itensDiretorios);
+            }
+            
         }
 	}
 	
@@ -130,30 +185,10 @@ public class UsuarioVipService {
         File arquivoSelecionado = fileChooser.showOpenDialog(stage);
         
         if (arquivoSelecionado != null) {
+        	Diretorio dir = diretorioService.getDiretorioAtual();
         	System.out.println(arquivoSelecionado.getAbsolutePath());
-        	
-        	Media media = new Media(arquivoSelecionado.toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            
-            mediaPlayer.setOnReady(() -> {
-                double duracaoSegundos = media.getDuration().toSeconds();
-                System.out.println("Duração (segundos): " + duracaoSegundos);
-
-                // Converter para minutos e segundos
-                int minutos = (int) duracaoSegundos / 60;
-                int segundos = (int) duracaoSegundos % 60;
-                System.out.println("Duração (mm:ss): " + minutos + ":" + segundos);
-            });
-
-            mediaPlayer.setOnError(() -> {
-                System.out.println("Erro ao carregar a música.");
-            });
-
-            mediaPlayer.setOnEndOfMedia(() -> {
-                mediaPlayer.stop();
-            });
-
-            mediaPlayer.play();
+        	musicaService.escreverNovaMusicaArquivo(arquivoSelecionado.getName(), arquivoSelecionado.getAbsolutePath(), dir);
+        	listarMusicas();
         }
 	}
 	

@@ -44,8 +44,8 @@
       <Label fx:id="labelPlaylist" alignment="CENTER" layoutX="594.0" layoutY="102.0" prefHeight="14.0" prefWidth="85.0" text="Playlists" />
       <ListView fx:id="listaPlaylist" layoutX="570.0" layoutY="119.0" prefHeight="148.0" prefWidth="134.0" />
       <Label fx:id="labelMusicas" alignment="CENTER" layoutX="174.0" layoutY="32.0" prefHeight="18.0" prefWidth="85.0" text="Diretorios" />
-      <ListView fx:id="listaMusicas" layoutX="349.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
-      <ListView fx:id="listaDiretorios" layoutX="122.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
+      <ListView fx:id="listaMusicas" onMouseClicked="#onMusicaClick" layoutX="349.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
+      <ListView fx:id="listaDiretorios" onMouseClicked="#onDiretorioClick" layoutX="122.0" layoutY="55.0" prefHeight="222.0" prefWidth="205.0" />
       <Label fx:id="labelNomePlaylist" alignment="CENTER" layoutX="409.0" layoutY="33.0" prefHeight="17.0" prefWidth="85.0" text="Musicas" />
       <Button fx:id="botaoPlay" layoutX="89.0" layoutY="352.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="PLAY" />
       <Button fx:id="botaoPause" layoutX="165.0" layoutY="352.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="66.0" text="PAUSA" />
