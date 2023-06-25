@@ -1,15 +1,55 @@
 package br.imd.controle;
 
+import java.util.ArrayList;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import br.imd.modelo.Diretorio;
+import br.imd.modelo.Musica;
+import br.imd.modelo.Usuario;
+
 
 public class MusicaService {
 
-	private void escreverNovaMusicaArquivo(String musica) {
+	private static ArrayList<Musica> musicas;
+	private static int musicaAtual = -1;
+	
+    private static final String ARQUIVO = "src/data/musicas.txt";
+    
+    public MusicaService () {
+    	musicas = new ArrayList<Musica>();
+    }
+    
+    public static ArrayList<Musica> getMusicas(Diretorio dir) {
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] partes = linha.split(",");
+                if (partes.length == 4 && Integer.parseInt(partes[1]) == dir.getId()) {
+            		Musica musica = new Musica();
+            		musica.setId(Integer.parseInt(partes[0]));
+            		musica.setDiretorioId(Integer.parseInt(partes[1]));
+            		musica.setTitulo(partes[2]);
+            		musica.setCaminho(partes[2]);
+            		musicas.add(musica);
+            		
+            		if (musicaAtual < 0) {
+            			musicaAtual = 0;
+            		}
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		return musicas;
+    }
+
+	private void escreverNovaMusicaArquivo(String musica, Diretorio dir) {
 		
 		String arquivo = "src/data/musicas.txt";
 		

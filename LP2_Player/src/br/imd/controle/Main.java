@@ -42,6 +42,7 @@ public class Main extends Application {
                 	try {
 						Parent telaVip = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaUsuarioVIP.fxml"));
 						Scene sceneUsuarioVip = new Scene(telaVip);
+						primaryStage.setTitle("Usuario VIP");
 						primaryStage.setScene(sceneUsuarioVip);
 					} catch (IOException e1) {
 						e1.printStackTrace();

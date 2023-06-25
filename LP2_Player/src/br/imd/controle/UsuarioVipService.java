@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,17 +16,75 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import br.imd.modelo.Diretorio;
+import br.imd.modelo.Musica;
+
 
 public class UsuarioVipService {
-	
+	@FXML
+    private ListView<String> listaDiretorios;
+	@FXML
+    private ListView<String> listaMusicas;
+
+    private ObservableList<String> itensDiretorios;
+    private ObservableList<String> itensMusicas;
+
+    public UsuarioVipService() {
+    	itensDiretorios = FXCollections.observableArrayList();
+    	itensMusicas = FXCollections.observableArrayList();
+    }
+    
+    @FXML
+    public void initialize() {
+        listarDiretorios();
+    }
+
+    public void listarDiretorios() {
+    	if (listaDiretorios == null) {
+            System.out.println("Erro: listaDiretorios está nulo.");
+            return;
+        }
+        DiretorioService diretorios = new DiretorioService();
+        for (Diretorio dir : diretorios.getDiretorios()) {
+            System.out.println(dir.getCaminho());
+            itensDiretorios.add(dir.getCaminho());
+        }
+
+        listaDiretorios.setItems(itensDiretorios);
+        
+        if (!itensDiretorios.isEmpty()) {
+        	listarMusicas();
+        }
+    }
+
+    public void listarMusicas() {
+    	if (itensMusicas == null) {
+            System.out.println("Erro: itensMusicas está nulo.");
+            return;
+        }
+  
+        DiretorioService diretorios = new DiretorioService();
+        Diretorio dir = diretorios.getDiretorioAtual();
+        
+        MusicaService musicas = new MusicaService();
+        for (Musica musica : musicas.getMusicas(dir)) {
+            System.out.println(musica.getCaminho());
+            itensMusicas.add(musica.getCaminho());
+        }
+
+        listaMusicas.setItems(itensMusicas);
+    }
+
 	public void AdicionarUsuario(){
 		Stage stage = new Stage();
 	    stage.setTitle("Modal");
@@ -39,6 +99,23 @@ public class UsuarioVipService {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	@FXML
+	public void AdicionarDiretorio(ActionEvent event){
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Selecione um diretório");
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        File diretorioSelecionado = directoryChooser.showDialog(stage);
+
+        if (diretorioSelecionado != null) {
+            System.out.println("Diretório selecionado: " + diretorioSelecionado.getAbsolutePath());
+            DiretorioService diretorios = new DiretorioService();
+            diretorios.escreverNovoDiretorioArquivo(diretorioSelecionado.getAbsolutePath());
+            itensDiretorios.add(diretorioSelecionado.getAbsolutePath());
+            listaDiretorios.setItems(itensDiretorios);
+        }
 	}
 	
 	@FXML
@@ -80,6 +157,7 @@ public class UsuarioVipService {
         }
 	}
 	
+	
 	public void Cadastrar(ActionEvent event) throws IOException {
 		Node node = (Node) event.getSource();
 	    Stage stage = (Stage) node.getScene().getWindow();
@@ -106,7 +184,7 @@ public class UsuarioVipService {
 	
 	private void escreverNovoUsuarioArquivo(String login, String senha, String idTipo) {
 		
-		String arquivo = "src/data/logins.csv";
+		String arquivo = "src/data/logins.txt";
 		
 		try {
             BufferedReader reader = new BufferedReader(new FileReader(arquivo));

@@ -2,38 +2,11 @@ package br.imd.modelo;
 
 public class Musica {
 	private int id;
-	private int duracao;
+	private int diretorioId;
     private String titulo;
-    private String album;
-    private String artista;
     private String caminho;
-
-    public Musica(int id, int duracao, String titulo, String album, String artista, String caminho) {
-    	this.id = id; 
-    	this.duracao = duracao;
-        this.titulo = titulo;
-        this.album = album;
-        this.artista = artista;
-        this.caminho = caminho;
-    }
     
     // getters & setters
-    
-    public String getTitulo() {
-		return titulo;
-		
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public int getDuracao() {
-		return duracao;
-	}
-
-	public void setDuracao(int duracao) {
-		this.duracao = duracao;
-	}
 
 	public int getId() {
 		return id;
@@ -43,20 +16,21 @@ public class Musica {
 		this.id = id;
 	}
 
-	public String getAlbum() {
-		return album;
+    public int getDiretorioId() {
+		return diretorioId;
 	}
 
-	public void setAlbum(String album) {
-		this.album = album;
+	public void setDiretorioId(int id) {
+		this.diretorioId = id;
 	}
 
-	public String getArtista() {
-		return artista;
+    
+    public String getTitulo() {
+		return titulo;
+		
 	}
-
-	public void setArtista(String artista) {
-		this.artista = artista;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getCaminho() {

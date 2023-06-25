@@ -3,9 +3,9 @@ package br.imd.modelo;
 public abstract class Usuario {
     private String login;
     private String senha;
-    private String id;
+    private int id;
 
-    public Usuario(String login, String senha, String id) {
+    public Usuario(String login, String senha, int id) {
         this.login = login;
         this.senha = senha;
         this.id = id;
@@ -39,11 +39,11 @@ public abstract class Usuario {
 		this.senha = senha;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 }

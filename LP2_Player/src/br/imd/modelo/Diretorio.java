@@ -2,12 +2,8 @@ package br.imd.modelo;
 
 public class Diretorio {
     private int id;
+    private int usuarioId;
     private String caminho;
-
-    public Diretorio(int id, String caminho) {
-        this.id = id;
-        this.caminho = caminho;
-    }
 
     // getters & setters
 
@@ -17,6 +13,14 @@ public class Diretorio {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+    public int getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(int id) {
+		this.usuarioId = id;
 	}
 
 	public void setCaminho(String caminho) {
