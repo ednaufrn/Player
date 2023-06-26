@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="telaUsuarioVip" fx:id="usuario" prefHeight="422.0" prefWidth="722.0" style="-fx-background-color: #323232;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.imd.controle.UsuarioVipService">
+<AnchorPane id="telaUsuarioComum" fx:id="usuario" prefHeight="422.0" prefWidth="722.0" style="-fx-background-color: #323232;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.imd.controle.UsuarioService">
    <children>
       <Label fx:id="usernameLabel" alignment="CENTER" layoutX="564.0" layoutY="25.0" prefHeight="90.0" prefWidth="156.0" text="username" textFill="WHITE">
          <font>
@@ -46,20 +46,18 @@
          <font>
             <Font size="9.0" />
          </font></Label>
-      <Label fx:id="labelPlaylist" alignment="CENTER" layoutX="594.0" layoutY="102.0" prefHeight="14.0" prefWidth="85.0" text="Playlists" textFill="WHITE" />
-      <ListView fx:id="listaPlaylist" layoutX="570.0" layoutY="119.0" prefHeight="148.0" prefWidth="134.0" style="-fx-background-color: #DDD;" />
       <Label fx:id="labelMusicas" alignment="CENTER" layoutX="174.0" layoutY="32.0" prefHeight="18.0" prefWidth="85.0" text="Diretorios" textFill="WHITE" />
       <ListView fx:id="listaMusicas" layoutX="349.0" layoutY="55.0" onMouseClicked="#onMusicaClick" prefHeight="222.0" prefWidth="205.0" style="-fx-background-color: #DDD;" />
       <ListView fx:id="listaDiretorios" layoutX="122.0" layoutY="55.0" onMouseClicked="#onDiretorioClick" prefHeight="222.0" prefWidth="205.0" style="-fx-background-color: #DDD;" />
       <Label fx:id="labelNomePlaylist" alignment="CENTER" layoutX="409.0" layoutY="33.0" prefHeight="17.0" prefWidth="85.0" text="Musicas" textFill="WHITE" />
-      <Button fx:id="botaoPlay" layoutX="89.0" layoutY="352.0" mnemonicParsing="false" onAction="#playMusica" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;" text="PLAY" />
-      <Button fx:id="botaoPause" layoutX="165.0" layoutY="352.0" mnemonicParsing="false" onAction="#pauseMusica" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;" text="PAUSA" />
-      <Button fx:id="botaoLeft" layoutX="17.0" layoutY="352.0" mnemonicParsing="false" onAction="#left" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;" text="ANTERIOR">
+      <Button fx:id="botaoPlay" layoutX="89.0" layoutY="352.0" mnemonicParsing="false" onAction="#playMusica" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;;" text="PLAY" />
+      <Button fx:id="botaoPause" layoutX="165.0" layoutY="352.0" mnemonicParsing="false" onAction="#pauseMusica" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;;" text="PAUSA" />
+      <Button fx:id="botaoLeft" layoutX="17.0" layoutY="352.0" mnemonicParsing="false" onAction="#left" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;;" text="ANTERIOR">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
-      <Button fx:id="botaoNext" layoutX="241.0" layoutY="352.0" mnemonicParsing="false" onAction="#next" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;" text="PROXIMA">
+      <Button fx:id="botaoNext" layoutX="241.0" layoutY="352.0" mnemonicParsing="false" onAction="#next" prefHeight="36.0" prefWidth="66.0" style="-fx-background-color: #1DB954;;" text="PROXIMA">
          <font>
             <Font size="11.0" />
          </font>
@@ -67,22 +65,6 @@
       <ProgressBar fx:id="progressBar" layoutY="327.0" onMouseClicked="#handleProgressBarClick" prefHeight="18.0" prefWidth="722.0" progress="0.0" />
       <Slider fx:id="volume" layoutX="571.0" layoutY="363.0" prefHeight="14.0" prefWidth="142.0" />
       <Button fx:id="addDiretorio" layoutX="84.0" layoutY="61.0" mnemonicParsing="false" onAction="#AdicionarDiretorio" text="add">
-         <font>
-            <Font size="9.0" />
-         </font></Button>
-      <Button fx:id="newPlaylist" layoutX="656.0" layoutY="278.0" mnemonicParsing="false" text="new">
-         <font>
-            <Font size="9.0" />
-         </font></Button>
-      <Label fx:id="labelPlaylist" alignment="CENTER" layoutX="571.0" layoutY="278.0" prefHeight="18.0" prefWidth="85.0" text="Nova Playlist" textFill="WHITE">
-         <font>
-            <Font size="9.0" />
-         </font></Label>
-      <Label fx:id="labelAddUsuario" alignment="CENTER" layoutY="157.0" prefHeight="18.0" prefWidth="85.0" text="Add Usuario" textFill="WHITE">
-         <font>
-            <Font size="9.0" />
-         </font></Label>
-      <Button fx:id="addUsuario" layoutX="84.0" layoutY="157.0" mnemonicParsing="false" onAction="#AdicionarUsuario" text="add">
          <font>
             <Font size="9.0" />
          </font></Button>

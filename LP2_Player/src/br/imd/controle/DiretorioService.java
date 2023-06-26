@@ -24,7 +24,6 @@ public class DiretorioService {
 		carregarDiretorios();
     }
     
-    
     public static ArrayList<Diretorio> getDiretorios() {
         return diretorios;
     }

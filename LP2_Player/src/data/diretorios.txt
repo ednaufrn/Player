@@ -1,2 +1,5 @@
-1,0,audio,/home/aval23109/java/Player/LP2_Player/audio
-2,0,src,/home/aval23109/java/Player/LP2_Player/src
+1,1,audio,/home/aval23109/java/Player/LP2_Player/audio
+2,4,audio,/home/aval23109/java/Player/LP2_Player/audio
+3,4,src,/home/aval23109/java/Player/LP2_Player/src
+4,0,audio,/home/aval23109/java/Player/LP2_Player/audio
+5,0,Music,/home/aval23109/Music
