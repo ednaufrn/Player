@@ -1,6 +1,7 @@
 package br.imd.controle;
 
 import java.io.File;
+import java.io.IOException;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -102,8 +103,8 @@ public class UsuarioService {
     	}
     	Musica musica = MusicaService.getMusicaAtual();
     	if (musica != null) {
-        	System.out.println("file:" + musica.getCaminho());
-        	Media media = new Media("file:" + musica.getCaminho());
+        	System.out.println(musica.getCaminho());
+        	Media media = new Media(musica.getCaminho());
             mediaPlayer = new MediaPlayer(media);
             if (autoPlay) {            	
             	playMusica();
@@ -229,7 +230,7 @@ public class UsuarioService {
 	}
 	
 	@FXML
-	public void AdicionarMusica(ActionEvent event){
+	public void AdicionarMusica(ActionEvent event) throws IOException{
     	
 		FileChooser fileChooser = new FileChooser();
         
@@ -241,10 +242,9 @@ public class UsuarioService {
         
         if (arquivoSelecionado != null) {
         	Diretorio dir = diretorioService.getDiretorioAtual();
-        	System.out.println(arquivoSelecionado.getAbsolutePath());
-        	musicaService.escreverNovaMusicaArquivo(arquivoSelecionado.getName(), arquivoSelecionado.getAbsolutePath(), dir);
+        	System.out.println(arquivoSelecionado.toURI().toString());
+        	musicaService.escreverNovaMusicaArquivo(arquivoSelecionado.getName(), arquivoSelecionado.toURI().toString(), dir);
         	listarMusicas();
         }
 	}
 }
-
