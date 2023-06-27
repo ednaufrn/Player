@@ -19,6 +19,7 @@ O projeto possui as seguintes classes e funcionalidades:
 
 - Classe `Usuario`: Representa um usuário do sistema e possui atributos como login, senha e ID.
 - Classe `UsuarioComum`: Extensão da classe `Usuario`, representa um usuário comum com recursos de gerenciamento de músicas.
+- Classe `UsuarioVip`: Extensão da classe `Usuario`, representa um usuário VIP com recursos de gerenciamento de músicas e criação de novos usuarios para ter acesso ao Player.
 - Classe `Diretorio`: Representa um diretório de músicas e possui uma lista de músicas.
 - Classe `Musica`: Representa uma música com atributos como título, caminho do arquivo e duração.
 - Classe `GerenciadorMusica`: Responsável por gerenciar o aplicativo, incluindo a adição, remoção e listagem de músicas.
