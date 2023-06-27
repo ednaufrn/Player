@@ -12,6 +12,13 @@ import javafx.scene.control.*;
 
 public class Main extends Application {
     private static final String TITULO_JANELA = "Tela de Login";
+    private Stage primaryStage;
+    
+    private static Main instance;
+    
+    public static Main getInstance() {
+    	return instance;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -19,6 +26,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+    	Main.instance = this;
+        this.primaryStage = primaryStage;
         primaryStage.setTitle(TITULO_JANELA);
         Parent root = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaLogin.fxml"));
         Scene scene = new Scene(root);
@@ -39,23 +48,24 @@ public class Main extends Application {
             if (retorno.getCodigo() != "0") {
                 System.out.println("Login bem-sucedido");
                 if(retorno.getUsuarioComum() == null) {
-                	try {
-						Parent telaVip = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaUsuarioVIP.fxml"));
-						Scene sceneUsuarioVip = new Scene(telaVip);
-						primaryStage.setTitle("Usuario VIP");
-						primaryStage.setScene(sceneUsuarioVip);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+                    try {
+                        Parent telaVip = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaUsuarioVIP.fxml"));
+                        Scene sceneUsuarioVip = new Scene(telaVip);
+                        primaryStage.setTitle("Media Player VIP");
+                        primaryStage.setScene(sceneUsuarioVip);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
                 else {
-                	try {
-						Parent telaComum = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaUsuario.fxml"));
-						Scene sceneUsuarioComum = new Scene(telaComum);
-						primaryStage.setScene(sceneUsuarioComum);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+                    try {
+                        Parent telaComum = FXMLLoader.load(getClass().getResource("/br/imd/visao/TelaUsuarioComum.fxml"));
+                        primaryStage.setTitle("Media Player");
+                        Scene sceneUsuarioComum = new Scene(telaComum);
+                        primaryStage.setScene(sceneUsuarioComum);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
             } else {
                 System.out.println("Login inválido");
@@ -63,5 +73,16 @@ public class Main extends Application {
         });
 
         primaryStage.show();
+    }
+    
+    public void logout() {
+    	this.primaryStage.close();
+        try {
+        	LoginService.logout();
+			this.start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

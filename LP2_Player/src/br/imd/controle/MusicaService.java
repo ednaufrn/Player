@@ -24,7 +24,41 @@ public class MusicaService {
     	musicas = new ArrayList<Musica>();
     }
     
+    public static void next () {
+    	musicaAtual += 1;
+    	if (musicaAtual == musicas.size()) {
+    		musicaAtual = 0;
+    	}
+    }
+    
+    public static void left () {
+    	musicaAtual -= 1;
+    	if (musicaAtual < 0) {
+    		musicaAtual = musicas.size() - 1;
+    	}
+    }
+    
+    public static Musica getMusicaAtual() {
+        return musicas.get(musicaAtual);
+    }
+    
+    public void setMusicaAtual (String titulo) {
+    	int index = -1;
+
+    	for (int i = 0; i < musicas.size(); i++) {
+    	    Musica musica = musicas.get(i);
+    	    if (musica.getTitulo().equals(titulo)) {
+    	        index = i;
+    	        break;
+    	    }
+    	}
+    	
+    	musicaAtual = index;
+
+    }
+    
     public static ArrayList<Musica> getMusicas(Diretorio dir) {
+    	musicaAtual = -1;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
             String linha;
@@ -84,9 +118,10 @@ public class MusicaService {
         }
 	}
 
-	public Musica getMusica(String selectedItem) {
+	public Musica getMusica(String titulo) {
 		for (Musica musica : musicas) {
-			if (musica.getTitulo().equals(selectedItem)) {
+			if (musica.getTitulo().equals(titulo)) {
+				setMusicaAtual(titulo);
 				return musica;
 			}
 		}

@@ -17,6 +17,11 @@ public class LoginService {
     public static Usuario getInstance() {
         return instance;
     }
+    
+    public static void logout() {
+    	instance = null;
+    	System.out.println("Logout bem-sucedido");
+    }
 
     public static RetornoLogin verificarCredenciais(String usuario, String senha) {
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO_BANCO_DADOS))) {
